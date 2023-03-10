@@ -4,9 +4,7 @@ import com.project.workshop.dto.UserDTO;
 import com.project.workshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,11 @@ public class UserResource {
         List<UserDTO> userList = userService.findAllUser();
         return ResponseEntity.ok().body(userList);
     }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
+        UserDTO userDTO = userService.findById(id);
+        return ResponseEntity.ok().body(userDTO);
+    }
+
 }
