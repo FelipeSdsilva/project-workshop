@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.Instant;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +16,7 @@ import java.time.Instant;
 @Table(name = "tb_order")
 public class Order implements Serializable {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant moment;
