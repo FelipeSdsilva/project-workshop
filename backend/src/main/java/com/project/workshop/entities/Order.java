@@ -10,7 +10,6 @@ import java.time.Instant;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "tb_order")
@@ -26,4 +25,20 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    public Order(Long id, Instant moment, OrderStatus status, User client) {
+        this.id = id;
+        this.moment = moment;
+        setStatus(status);
+        this.client = client;
+    }
+
+    public OrderStatus getStatus() {
+        return OrderStatus.valueOf(String.valueOf(status));
+    }
+
+    public void setStatus(OrderStatus status) {
+        if (status != null) {
+            this.status = OrderStatus.valueOf(status.getCode());
+        }
+    }
 }

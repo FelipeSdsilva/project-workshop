@@ -2,7 +2,6 @@ package com.project.workshop.dto;
 
 import com.project.workshop.entities.Order;
 import com.project.workshop.entities.enums.OrderStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,6 @@ import java.time.Instant;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO implements Serializable {
 
@@ -20,13 +18,28 @@ public class OrderDTO implements Serializable {
     private Instant moment;
     private OrderStatus status;
 
-
     private UserDTO client;
+
+    public OrderDTO(Long id, Instant moment, OrderStatus status, UserDTO client) {
+        this.id = id;
+        this.moment = moment;
+        setStatus(status);
+        this.client = client;
+    }
 
     public OrderDTO(Order order) {
         this.id = order.getId();
         this.moment = order.getMoment();
-        this.status = order.getStatus();
+        setStatus(order.getStatus());
         this.client = new UserDTO(order.getClient());
+    }
+
+
+    public OrderStatus getStatus() {
+        return OrderStatus.valueOf(String.valueOf(status));
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = OrderStatus.valueOf(status.getCode());
     }
 }
