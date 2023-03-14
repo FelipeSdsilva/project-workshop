@@ -49,7 +49,7 @@ public class UserService {
         user.setName(userDTO.getName());
         user.setEmail(user.getEmail());
         user.setPhone(userDTO.getPhone());
-        user.setPassword(userDTO.getPassword());
+
     }
 
 }

@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,6 +21,8 @@ public class OrderDTO implements Serializable {
     private OrderStatus status;
 
     private UserDTO client;
+
+    private Set<OrderItemDTO> items = new HashSet<>();
 
     public OrderDTO(Long id, Instant moment, OrderStatus status, UserDTO client) {
         this.id = id;

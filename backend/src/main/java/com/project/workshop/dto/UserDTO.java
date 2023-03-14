@@ -17,13 +17,12 @@ public class UserDTO implements Serializable {
     private String name;
     private String email;
     private String phone;
-    private String password;
+
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.phone = user.getPhone();
-        this.password = user.getPassword();
     }
 }
