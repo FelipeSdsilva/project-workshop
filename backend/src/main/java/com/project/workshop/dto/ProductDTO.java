@@ -24,11 +24,21 @@ public class ProductDTO implements Serializable {
 
     private Set<CategoryDTO> categories = new HashSet<>();
 
+    private Set<OrderItemDTO> items = new HashSet<>();
+
     public ProductDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
         this.imgUrl = product.getImgUrl();
+    }
+
+    public OrderDTO getOrders(){
+        Set<OrderDTO> orders = new HashSet<>();
+        for (OrderItemDTO itemDTO : items){
+            orders.add(itemDTO.getOrderId());
+        }
+        return (OrderDTO) orders;
     }
 }
