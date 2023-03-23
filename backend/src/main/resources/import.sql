@@ -22,4 +22,4 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (4,2);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (5,1);
 
 INSERT INTO tb_order_item (order_id, product_id, quantity, price) VALUES (1, 1, 2, 90.5);
-INSERT INTO tb_order_item (order_id, product_id, quantity, price) VALUES (1, 1, 3, 1250.0);
+INSERT INTO tb_order_item (order_id, product_id, quantity, price) VALUES (1, 3, 2, 1250.0);
