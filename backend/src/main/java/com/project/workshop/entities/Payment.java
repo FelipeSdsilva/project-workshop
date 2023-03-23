@@ -21,4 +21,8 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant moment;
+
+    @OneToOne
+    @MapsId
+    private Order order;
 }
