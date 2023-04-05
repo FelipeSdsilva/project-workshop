@@ -3,7 +3,12 @@ package com.project.workshop.services;
 import com.project.workshop.dto.OrderDTO;
 import com.project.workshop.entities.Order;
 import com.project.workshop.repositories.OrderRepository;
+import com.project.workshop.services.exceptions.DatabaseException;
+import com.project.workshop.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,14 +41,25 @@ public class OrderService {
 
     @Transactional
     public OrderDTO updateOrder(Long id, OrderDTO orderDTO) {
-        Order order = repository.getReferenceById(id);
-        converterDtoInEntity(orderDTO, order);
-        order = repository.save(order);
-        return new OrderDTO(order);
+        try {
+            Order order = repository.getReferenceById(id);
+            converterDtoInEntity(orderDTO, order);
+            order = repository.save(order);
+            return new OrderDTO(order);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
     }
 
     public void deleteOrder(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        }catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("Id not Found " + id);
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integrity Violation");
+        }
+
     }
 
     private void converterDtoInEntity(OrderDTO orderDTO, Order order) {
