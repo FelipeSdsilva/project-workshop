@@ -27,7 +27,7 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public OrderDTO findOrderById(Long id) {
-        Order order = repository.findById(id).orElseThrow();
+        Order order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not found " + id));
         return new OrderDTO(order);
     }
 
@@ -46,7 +46,7 @@ public class OrderService {
             converterDtoInEntity(orderDTO, order);
             order = repository.save(order);
             return new OrderDTO(order);
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found " + id);
         }
     }
@@ -54,9 +54,9 @@ public class OrderService {
     public void deleteOrder(Long id) {
         try {
             repository.deleteById(id);
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Id not Found " + id);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Integrity Violation");
         }
 
